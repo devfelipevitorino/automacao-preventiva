@@ -19,10 +19,8 @@ A ferramenta facilita tarefas rotineiras, como configuração automática de per
 
 ## Tecnologias Utilizadas
 
-- Python 3.x  
+- Python 
 - Tkinter para interface gráfica  
-- ttk para widgets estilizados  
-- scrolledtext para exibição de logs  
 - subprocess para execução de comandos do sistema operacional (Windows)
 
 ---
