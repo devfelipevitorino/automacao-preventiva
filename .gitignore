@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Diretórios e arquivos do ambiente virtual
+.venv/
+venv/
+ENV/
+env/
+
+# Arquivos do PyInstaller
+dist/
+build/
+*.spec
+
+# Arquivos temporários e logs
+*.log
+*.tmp
+*.temp
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos do editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos do Python test framework
+.pytest_cache/
+.cache/
+
+# Pastas de cache do pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Arquivos de configurações locais
+local_settings.py
+
+# Arquivos de banco de dados SQLite
+*.sqlite3
+*.db
+
+# Arquivos pyinstaller para cache
+__pycache__/
+
+# Arquivos gerados pelo pycharm
+*.iml
+out/
+
+# Arquivos do sistema Windows
+desktop.ini
+
+# Arquivos temporários do Windows
+~$*
+
