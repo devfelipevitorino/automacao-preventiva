@@ -9,4 +9,4 @@ A ferramenta facilita tarefas rotineiras, como configuração automática de per
 
 ## Executar
 
-[Download do Preventive Automation v1.0.2](https://github.com/devfelipevitorino/automacao-preventiva/releases/download/v1.0.2/automacao_preventiva.rar) 
+[Download do Preventive Automation v1.0.2](https://github.com/devfelipevitorino/automacao-preventiva/releases/download/v1.0.3/acao_preventiva.rar) 
