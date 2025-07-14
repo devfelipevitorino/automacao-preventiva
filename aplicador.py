@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import tkinter.ttk as ttk
 import tkinter.scrolledtext
 
-from permissoes import configurar_sql_delayed_start, conceder_permissao, run_subprocess_with_cancel
+from permissoes import configurar_sql_delayed_start, conceder_permissao, run_subprocess_with_cancel, desabilitar_conta_convidado, ativar_firewall_e_regras, criar_tarefas_backup
 
 MAX_WORKERS = 2
 
@@ -100,9 +100,21 @@ class AplicadorPermissoes:
         if sql_alterado:
             self.acoes_realizadas.append("SQL ATRASO NA INICIALIZAÇÃO")
 
-        if self.cancelar.is_set():
-            self.finalizar_processo_cancelado()
-            return
+        msg_guest, alterado_guest = desabilitar_conta_convidado(self.cancelar, run_subprocess_with_cancel)
+        self.adicionar_mensagem(msg_guest)
+        if alterado_guest:
+            self.acoes_realizadas.append("ATIVAR FIREWALL CRIAR REGRAS - DESABILITAR CONTA CONVIDADO")
+
+        msg_firewall, alterado_firewall = ativar_firewall_e_regras(self.cancelar, run_subprocess_with_cancel)
+        self.adicionar_mensagem(msg_firewall)
+        if alterado_firewall:
+            self.acoes_realizadas.append("ATIVAR FIREWALL CRIAR REGRAS - DESABILITAR CONTA CONVIDADO")
+
+        msg_backup, alterado_backup = criar_tarefas_backup(self.cancelar, run_subprocess_with_cancel)
+        self.adicionar_mensagem(msg_backup)
+        if alterado_backup:
+            self.acoes_realizadas.append("CRIAR TAREFAS NO AGENDADOR DE TAREFAS DO WINDOWS PARA INICIAR SERVICOS (SQL, BACKUP CLOUD)")
+
 
         self.atualizar_status("Buscando pastas para processar...")
         self.root.update_idletasks()
