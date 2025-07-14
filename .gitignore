@@ -3,57 +3,34 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Diretórios e arquivos do ambiente virtual
+# Environments
+.env
 .venv/
-venv/
-ENV/
 env/
+venv/
 
-# Arquivos do PyInstaller
-dist/
+# Distribuição / Build
 build/
+dist/
+*.egg-info/
+.eggs/
+
+# PyInstaller
 *.spec
 
-# Arquivos temporários e logs
+# VSCode
+.vscode/
+
+# Logs e arquivos temporários
 *.log
 *.tmp
-*.temp
 
-# Arquivos do sistema operacional
+# Sistema operacional
 .DS_Store
 Thumbs.db
 
-# Arquivos do editor
-.vscode/
-.idea/
-*.swp
-*.swo
+# Test coverage
+.coverage
+htmlcov/
 
-# Arquivos do Python test framework
-.pytest_cache/
-.cache/
-
-# Pastas de cache do pip
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Arquivos de configurações locais
-local_settings.py
-
-# Arquivos de banco de dados SQLite
-*.sqlite3
-*.db
-
-# Arquivos pyinstaller para cache
-__pycache__/
-
-# Arquivos gerados pelo pycharm
-*.iml
-out/
-
-# Arquivos do sistema Windows
-desktop.ini
-
-# Arquivos temporários do Windows
-~$*
-
+# Outros arquivos específicos do seu projeto podem entrar aqui
