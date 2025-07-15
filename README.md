@@ -76,4 +76,4 @@ Este projeto consiste em uma aplicação Python com interface gráfica para auto
 
 ## Executar
 
-[Download do Preventive Automation v1.0.2](https://github.com/devfelipevitorino/automacao-preventiva/releases/download/v1.0.3/acao_preventiva.rar) 
+[Download do Preventive Automation v1.0.4](https://github.com/devfelipevitorino/automacao-preventiva/releases/download/v1.0.4/acao_preventiva_v1.0.4.rar) 
