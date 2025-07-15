@@ -138,8 +138,8 @@ def ativar_firewall_e_regras(cancel_event, run_subprocess):
     if ret != 0:
         return f"Firewall e regras - Status: Erro ao verificar firewall: {err.strip() if err else ''}", False
 
-    firewall_ativo = all(profile_state.upper() == "ON" for profile_state in 
-                        [line.split()[-1] for line in out.splitlines() if "State" in line])
+    firewall_ativo = all(profile_state.upper() == "ON" for profile_state in
+                         [line.split()[-1] for line in out.splitlines() if "State" in line])
 
     if not firewall_ativo:
         ret, out, err = run_subprocess(cancel_event, 'netsh advfirewall set allprofiles state on')
@@ -149,26 +149,42 @@ def ativar_firewall_e_regras(cancel_event, run_subprocess):
             return f"Firewall e regras - Status: Erro ao ativar firewall: {err.strip() if err else ''}", False
 
     regras = {
-        "Softcom - Permitir SQL Server 1433": 1433,
-        "Softcom - Permitir SQL Server 5433": 5433
+        1433: ["TCP"],
+        5433: ["TCP"],
+        7711: ["TCP"],
+        4009: ["TCP"],
+        8081: ["TCP"],
+        3306: ["TCP"],
+        135:  ["TCP"],
+        443:  ["TCP"],
+        1434: ["TCP", "UDP"]
     }
 
+    regras_necessarias = []
+    for porta, protocolos in regras.items():
+        for protocolo in protocolos:
+            regras_necessarias.append((f"SOFTCOM {porta} Entrada {protocolo}", "in", porta, protocolo))
+            regras_necessarias.append((f"SOFTCOM {porta} Saida {protocolo}", "out", porta, protocolo))
+
     regras_faltando = []
-    for regra in regras.keys():
-        ret_r, out_r, err_r = run_subprocess(cancel_event, f'netsh advfirewall firewall show rule name="{regra}"')
-        if ret_r != 0 or ("não encontrado" in (out_r or "").lower() or "no rules match the specified criteria" in (out_r or "").lower()):
-            regras_faltando.append(regra)
+    for nome_regra, direcao, porta, protocolo in regras_necessarias:
+        cmd_verifica = f'netsh advfirewall firewall show rule name="{nome_regra}"'
+        ret_r, out_r, err_r = run_subprocess(cancel_event, cmd_verifica)
+        if ret_r != 0 or ("não encontrado" in (out_r or "").lower() or "no rules match" in (out_r or "").lower()):
+            regras_faltando.append((nome_regra, direcao, porta, protocolo))
 
     if firewall_ativo and not regras_faltando:
         return "Firewall e regras - Status: Ação preventiva já feita anteriormente", False
 
     sucesso_total = True
-    for regra in regras_faltando:
+    for nome_regra, direcao, porta, protocolo in regras_faltando:
         if cancel_event.is_set():
             return "Firewall e regras - Status: Cancelado pelo usuário", False
-        porta = regras[regra]
-        cmd = f'netsh advfirewall firewall add rule name="{regra}" dir=in action=allow protocol=TCP localport={porta}'
-        ret_c, out_c, err_c = run_subprocess(cancel_event, cmd)
+        cmd_add = (
+            f'netsh advfirewall firewall add rule name="{nome_regra}" '
+            f'dir={direcao} action=allow protocol={protocolo} localport={porta}'
+        )
+        ret_c, out_c, err_c = run_subprocess(cancel_event, cmd_add)
         if ret_c != 0:
             sucesso_total = False
 
@@ -176,6 +192,7 @@ def ativar_firewall_e_regras(cancel_event, run_subprocess):
         return "Firewall e regras - Status: Alterado com sucesso", True
     else:
         return "Firewall e regras - Status: Erro ao criar regras do firewall", False
+
         
 def criar_tarefas_backup(cancel_event, run_subprocess):
     horarios = ["07:00", "12:00", "16:00", "20:00"]
@@ -221,3 +238,16 @@ def criar_tarefas_backup(cancel_event, run_subprocess):
         return "Agendador Backup - Status: Tarefas criadas com sucesso", True
     else:
         return "Agendador Backup - Status: Erro ao criar algumas tarefas", False
+
+def verificar_rede_wifi(cancel_event, run_subprocess):
+    ret, out, err = run_subprocess(cancel_event, 'netsh wlan show interfaces')
+    if err == "cancelado":
+        return "REDE SEM FIO - Status: Cancelado pelo usuário", False
+    if ret != 0:
+        return f"REDE SEM FIO - Status: Erro ao verificar Wi-Fi: {err.strip() if err else ''}", False
+
+    texto = out.lower()
+    if "connected" in texto or "conectado" in texto:
+        return "REDE SEM FIO - Status: Recomendação - Evitar uso de Wi-Fi", True
+    else:
+        return "REDE SEM FIO - Status: Computador conectado por cabo", False
