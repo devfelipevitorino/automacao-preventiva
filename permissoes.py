@@ -195,6 +195,13 @@ def ativar_firewall_e_regras(cancel_event, run_subprocess):
 
         
 def criar_tarefas_backup(cancel_event, run_subprocess):
+    ret, out, err = run_subprocess(cancel_event, 'sc queryex SOFTCOMBACKUP')
+    if cancel_event.is_set():
+        return "Agendador Backup - Status: Cancelado pelo usuário", False
+
+    if ret != 0 or ("não existe" in (out or "").lower() or "does not exist" in (out or "").lower()):
+        return "Agendador Backup - Status: Serviço SOFTCOMBACKUP não encontrado", False
+
     horarios = ["07:00", "12:00", "16:00", "20:00"]
     tarefas_diarias = [
         (f"Iniciar_SOFTCOMBACKUP_{h.replace(':', '_')}", f"net start SOFTCOMBACKUP", "daily", h)
@@ -238,6 +245,7 @@ def criar_tarefas_backup(cancel_event, run_subprocess):
         return "Agendador Backup - Status: Tarefas criadas com sucesso", True
     else:
         return "Agendador Backup - Status: Erro ao criar algumas tarefas", False
+
 
 def verificar_rede_wifi(cancel_event, run_subprocess):
     ret, out, err = run_subprocess(cancel_event, 'netsh wlan show interfaces')
