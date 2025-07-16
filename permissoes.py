@@ -255,7 +255,12 @@ def verificar_rede_wifi(cancel_event, run_subprocess):
         return f"REDE SEM FIO - Status: Erro ao verificar Wi-Fi: {err.strip() if err else ''}", False
 
     texto = out.lower()
-    if "connected" in texto or "conectado" in texto:
-        return "REDE SEM FIO - Status: Recomendação - Evitar uso de Wi-Fi", True
-    else:
-        return "REDE SEM FIO - Status: Computador conectado por cabo", False
+    for linha in texto.splitlines():
+        if "state" in linha or "estado" in linha:
+            if "connected" in linha or "conectado" in linha:
+                return "REDE SEM FIO - Status: Recomendação - Evitar uso de Wi-Fi", True
+            else:
+                return "REDE SEM FIO - Status: Computador conectado por cabo", False
+
+    return "REDE SEM FIO - Status: Computador conectado por cabo", False
+
