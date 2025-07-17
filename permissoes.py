@@ -245,22 +245,3 @@ def criar_tarefas_backup(cancel_event, run_subprocess):
         return "Agendador Backup - Status: Tarefas criadas com sucesso", True
     else:
         return "Agendador Backup - Status: Erro ao criar algumas tarefas", False
-
-
-def verificar_rede_wifi(cancel_event, run_subprocess):
-    ret, out, err = run_subprocess(cancel_event, 'netsh wlan show interfaces')
-    if err == "cancelado":
-        return "REDE SEM FIO - Status: Cancelado pelo usuário", False
-    if ret != 0:
-        return f"REDE SEM FIO - Status: Erro ao verificar Wi-Fi: {err.strip() if err else ''}", False
-
-    texto = out.lower()
-    for linha in texto.splitlines():
-        if "state" in linha or "estado" in linha:
-            if "connected" in linha or "conectado" in linha:
-                return "REDE SEM FIO - Status: Recomendação - Evitar uso de Wi-Fi", True
-            else:
-                return "REDE SEM FIO - Status: Computador conectado por cabo", False
-
-    return "REDE SEM FIO - Status: Computador conectado por cabo", False
-

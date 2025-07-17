@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import tkinter.ttk as ttk
 import tkinter.scrolledtext
 
-from permissoes import configurar_sql_delayed_start, conceder_permissao, run_subprocess_with_cancel, desabilitar_conta_convidado, ativar_firewall_e_regras, criar_tarefas_backup, verificar_rede_wifi
+from permissoes import configurar_sql_delayed_start, conceder_permissao, run_subprocess_with_cancel, desabilitar_conta_convidado, ativar_firewall_e_regras, criar_tarefas_backup
 
 MAX_WORKERS = 2
 
@@ -123,12 +123,6 @@ class AplicadorPermissoes:
 
         self.atualizar_status("Verificando tipo de rede (Wi-Fi / Cabeada)...")
         self.root.update_idletasks()
-
-        msg_wifi, recomendacao_wifi = verificar_rede_wifi(self.cancelar, run_subprocess_with_cancel)
-        self.adicionar_mensagem(msg_wifi)
-        if recomendacao_wifi:
-            self.acoes_realizadas.append("REDE SEM FIO - RECOMENDAÇÃO")
-
 
         self.atualizar_status("Buscando pastas para processar...")
         self.root.update_idletasks()
