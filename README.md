@@ -2,8 +2,7 @@
 
 ## Descrição
 
-Este projeto consiste em uma aplicação Python com interface gráfica para automatizar diversas ações preventivas relacionadas à infraestrutura de TI, como configuração do SQL Server Express, desativação da conta Convidado, configuração do firewall, criação de tarefas de backup e concessão de permissões em pastas específicas. O objetivo é facilitar a manutenção do ambiente Softcom com um clique, oferecendo feedback visual claro sobre o status de cada ação.
-
+Este projeto foi desenvolvido para apoiar e tentar melhorar os processos de rotina no trabalho de Service Desk N1. Trata-se de uma aplicação em Python com interface gráfica que automatiza diversas ações preventivas relacionadas à infraestrutura de TI.
 ---
 
 ## Estrutura do Projeto
@@ -76,4 +75,4 @@ Este projeto consiste em uma aplicação Python com interface gráfica para auto
 
 ## Executar
 
-[Download do Preventive Automation v1.0.5](https://github.com/devfelipevitorino/automacao-preventiva/releases/download/v1.0.5/acao_preventiva_v1.0.5.rar) 
+[Download do Preventive Automation v1.0.6](https://github.com/devfelipevitorino/automacao-preventiva/releases/download/v1.0.6/acao_preventiva_v1.0.6.rar) 
