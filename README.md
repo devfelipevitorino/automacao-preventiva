@@ -87,4 +87,4 @@ Padronizar e automatizar ações críticas de segurança e configuração em amb
 
 ## 📥 Executar
 
-[⬇️ Download do Preventive Automation v1.0.7](https://github.com/devfelipevitorino/automacao-preventiva/releases/download/v1.0.7/acao_preventiva_v1.0.7.rar)
+[⬇️ Download da Automação Preventiva v1.0.7](https://github.com/devfelipevitorino/automacao-preventiva/releases/download/v1.0.7/acao_preventiva_v1.0.7.rar)
