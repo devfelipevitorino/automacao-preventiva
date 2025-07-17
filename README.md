@@ -9,7 +9,7 @@ Trata-se de uma aplicação em **Python com interface gráfica** que automatiza 
 
 ## 🎯 Objetivo
 
-Padronizar e automatizar ações críticas de segurança e configuração em ambientes Windows, garantindo:
+Padronizar e automatizar ações de segurança e configuração em ambientes Windows, garantindo:
 - 🔒 Menor risco de falhas manuais.
 - 📋 Conformidade com políticas de segurança.
 - ⏱️ Redução de tempo operacional.
@@ -27,7 +27,7 @@ Padronizar e automatizar ações críticas de segurança e configuração em amb
 ## ⚙️ Funcionalidades
 
 ### 📁 Permissões em Pastas
-- **O que faz:** Verifica e aplica permissões corretas em pastas críticas do sistema e do ERP.
+- **O que faz:** Verifica e aplica permissões corretas em pastas do sistema.
 - ✅ **Benefício:** Evita bloqueios de escrita/leitura por falta de permissões.
 
 ---
